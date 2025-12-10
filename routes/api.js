@@ -38,7 +38,14 @@ module.exports = function (app) {
 
   app.route('/api/stock-prices')
     .get(async function (req, res) {
-      const { stock, like } = req.query;
+      let { stock, like } = req.query;
+      if (stock) {
+        if (Array.isArray(stock)) {
+          stock = stock.map(s => s.toUpperCase());
+        } else {
+          stock = stock.toUpperCase();
+        }
+      }
       const likeBool = like === 'true';
       const ip = req.ip;
       // Anonymize IP
@@ -61,7 +68,9 @@ module.exports = function (app) {
           price: stock2Data ? stock2Data.latestPrice : 0,
           rel_likes: likes2 - likes1
         };
-        res.json([stock1Obj, stock2Obj]);
+        res.json({
+          stockData: [stock1Obj, stock2Obj]
+        });
 
       } else {
         const stockData = await getStockPrice(stock);

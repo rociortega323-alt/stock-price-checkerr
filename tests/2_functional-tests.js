@@ -56,12 +56,13 @@ suite('Functional Tests', function () {
             .query({ stock: ['GOOG', 'MSFT'] })
             .end(function (err, res) {
                 assert.equal(res.status, 200);
-                assert.isArray(res.body);
-                assert.lengthOf(res.body, 2);
-                assert.property(res.body[0], 'stock');
-                assert.property(res.body[0], 'rel_likes');
-                assert.property(res.body[1], 'stock');
-                assert.property(res.body[1], 'rel_likes');
+                assert.property(res.body, 'stockData');
+                assert.isArray(res.body.stockData);
+                assert.lengthOf(res.body.stockData, 2);
+                assert.property(res.body.stockData[0], 'stock');
+                assert.property(res.body.stockData[0], 'rel_likes');
+                assert.property(res.body.stockData[1], 'stock');
+                assert.property(res.body.stockData[1], 'rel_likes');
                 done();
             });
     });
@@ -72,10 +73,11 @@ suite('Functional Tests', function () {
             .query({ stock: ['GOOG', 'MSFT'], like: 'true' })
             .end(function (err, res) {
                 assert.equal(res.status, 200);
-                assert.isArray(res.body);
-                assert.lengthOf(res.body, 2);
-                assert.property(res.body[0], 'rel_likes');
-                assert.property(res.body[1], 'rel_likes');
+                assert.property(res.body, 'stockData');
+                assert.isArray(res.body.stockData);
+                assert.lengthOf(res.body.stockData, 2);
+                assert.property(res.body.stockData[0], 'rel_likes');
+                assert.property(res.body.stockData[1], 'rel_likes');
                 done();
             });
     });
