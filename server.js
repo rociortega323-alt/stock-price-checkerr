@@ -15,6 +15,7 @@ const fccTestingRoutes = require('./routes/fcctesting.js');
 const runner = require('./test-runner');
 
 const app = express();
+app.enable('trust proxy');
 
 app.use('/public', express.static(process.cwd() + '/public'));
 
